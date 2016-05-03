@@ -34,8 +34,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java-client";
     protected String artifactVersion = "1.0.0";
-    protected String projectFolder = "src" + File.separator + "main";
-    protected String sourceFolder = projectFolder + File.separator + "java";
+    protected String projectFolder = "";//"src" + File.separator + "main";
+    protected String sourceFolder = "";//projectFolder + File.separator + "java";
     protected String localVariablePrefix = "";
     protected boolean fullJavaUtil;
     protected String javaUtilPrefix = "";
@@ -50,7 +50,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         super();
         outputFolder = "generated-code" + File.separator + "java";
         modelTemplateFiles.put("model.mustache", ".java");
-        apiTemplateFiles.put("api.mustache", ".java");
+        //apiTemplateFiles.put("api.mustache", ".java");
         embeddedTemplateDir = templateDir = "Java";
         apiPackage = "io.swagger.client.api";
         modelPackage = "io.swagger.client.model";
@@ -953,7 +953,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
         packageName = packageName.trim(); // FIXME: a parameter should not be assigned. Also declare the methods parameters as 'final'.
         packageName = packageName.replaceAll("[^a-zA-Z0-9_\\.]", "_");
         if(Strings.isNullOrEmpty(packageName)) {
-            return "invalidPackageName";
+//            return "invalidPackageName";
         }
         return packageName;
     }

@@ -10,7 +10,7 @@ public class FpserverGenerator extends AbstractJavaJAXRSServerCodegen {
     public FpserverGenerator() {
         super();
 
-        sourceFolder = "src/gen/java";
+        sourceFolder = "";
         invokerPackage = "io.swagger.api";
         artifactId = "swagger-jaxrs-server";
         outputFolder = "generated-code/JavaJaxRS-Jersey";
@@ -18,15 +18,16 @@ public class FpserverGenerator extends AbstractJavaJAXRSServerCodegen {
         modelTemplateFiles.put("model.mustache", ".java");
 //        apiTemplateFiles.put("api.mustache", ".java");
 //        apiTemplateFiles.put("apiService.mustache", ".java");
-        apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
+        apiTemplateFiles.put("fpserverAPI.mustache", ".java");
 //        apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
 
-        apiPackage = "io.swagger.api";
-        modelPackage = "io.swagger.model";
+        apiPackage = "";//io.swagger.api";
+        modelPackage = "";//io.swagger.model";
 
         additionalProperties.put("title", title);
+        
 
-        embeddedTemplateDir = templateDir = JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey1_18";
+        embeddedTemplateDir = templateDir = "fpserver"; //JAXRS_TEMPLATE_DIRECTORY_NAME + File.separator + "jersey1_18";
 
         for ( int i = 0; i < cliOptions.size(); i++ ) {
             if ( CodegenConstants.LIBRARY.equals(cliOptions.get(i).getOpt()) ) {
@@ -109,6 +110,9 @@ public class FpserverGenerator extends AbstractJavaJAXRSServerCodegen {
             supportingFiles.add(new SupportingFile("LocalDateTimeProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateTimeProvider.java"));
             supportingFiles.add(new SupportingFile("LocalDateProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "LocalDateProvider.java"));
         }
+        
+        int k = outputFolder.lastIndexOf("/");
+        additionalProperties.put("apiName", outputFolder.substring(k+1));
     }
 
     @Override

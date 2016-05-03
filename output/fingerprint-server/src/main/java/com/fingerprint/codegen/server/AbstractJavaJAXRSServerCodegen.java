@@ -17,7 +17,7 @@ public abstract class AbstractJavaJAXRSServerCodegen extends JavaClientCodegen
      * Mustache template for the JAX-RS Codegen.
      */
     protected static final String JAXRS_TEMPLATE_DIRECTORY_NAME = "JavaJaxRS";
-    protected String implFolder = "src/main/java";
+    protected String implFolder = "";//src/main/java";
     protected String title = "Swagger Server";
 
     public AbstractJavaJAXRSServerCodegen()
@@ -168,16 +168,17 @@ public abstract class AbstractJavaJAXRSServerCodegen extends JavaClientCodegen
             return "DefaultApi";
         }
         computed = sanitizeName(computed);
-        return camelize(computed) + "Api";
+        return camelize(computed) + "API";
     }
 
     @Override
     public String apiFilename(String templateName, String tag) {
         String result = super.apiFilename(templateName, tag);
 
-        if ( templateName.endsWith("Impl.mustache") ) {
+        if ( templateName.endsWith("fpserverAPI.mustache") ) {
             int ix = result.lastIndexOf('/');
-            result = result.substring(0, ix) + "/impl" + result.substring(ix, result.length() - 5) + "ServiceImpl.java";
+//            result = result.substring(0, ix) + "/impl" + result.substring(ix, result.length() - 5) + "ServiceImpl.java";
+            result = result.substring(0, ix) + result.substring(ix, result.length() - 8) + "API.java";
             result = result.replace(apiFileFolder(), implFileFolder(implFolder));
         } else if ( templateName.endsWith("Factory.mustache") ) {
             int ix = result.lastIndexOf('/');
