@@ -16,10 +16,10 @@ public class FpserverGenerator extends AbstractJavaJAXRSServerCodegen {
         outputFolder = "generated-code/JavaJaxRS-Jersey";
 
         modelTemplateFiles.put("model.mustache", ".java");
-        apiTemplateFiles.put("api.mustache", ".java");
-        apiTemplateFiles.put("apiService.mustache", ".java");
+//        apiTemplateFiles.put("api.mustache", ".java");
+//        apiTemplateFiles.put("apiService.mustache", ".java");
         apiTemplateFiles.put("apiServiceImpl.mustache", ".java");
-        apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
+//        apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
 
         apiPackage = "io.swagger.api";
         modelPackage = "io.swagger.model";
@@ -83,17 +83,17 @@ public class FpserverGenerator extends AbstractJavaJAXRSServerCodegen {
         }
 
         supportingFiles.clear();
-        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
-        writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
-        supportingFiles.add(new SupportingFile("ApiException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiException.java"));
-        supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiOriginFilter.java"));
-        supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
-        supportingFiles.add(new SupportingFile("NotFoundException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
-        supportingFiles.add(new SupportingFile("jacksonJsonProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JacksonJsonProvider.java"));
-        writeOptional(outputFolder, new SupportingFile("bootstrap.mustache", (implFolder + '/' + apiPackage).replace(".", "/"), "Bootstrap.java"));
+//        writeOptional(outputFolder, new SupportingFile("pom.mustache", "", "pom.xml"));
+//        writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
+//        supportingFiles.add(new SupportingFile("ApiException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiException.java"));
+//        supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiOriginFilter.java"));
+//        supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
+//        supportingFiles.add(new SupportingFile("NotFoundException.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
+//        supportingFiles.add(new SupportingFile("jacksonJsonProvider.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "JacksonJsonProvider.java"));
+//        writeOptional(outputFolder, new SupportingFile("bootstrap.mustache", (implFolder + '/' + apiPackage).replace(".", "/"), "Bootstrap.java"));
 
-        writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
-        supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
+//        writeOptional(outputFolder, new SupportingFile("web.mustache", ("src/main/webapp/WEB-INF"), "web.xml"));
+//        supportingFiles.add(new SupportingFile("StringUtil.mustache", (sourceFolder + '/' + apiPackage).replace(".", "/"), "StringUtil.java"));
 
         if ( additionalProperties.containsKey("dateLibrary") ) {
             setDateLibrary(additionalProperties.get("dateLibrary").toString());
