@@ -1,0 +1,14 @@
+mvn package
+
+java -cp target/fpclient-swagger-codegen-1.0.0.jar:../../modules/swagger-codegen-cli/target/swagger-codegen-cli.jar \
+  io.swagger.codegen.SwaggerCodegen generate -l fpclient\
+  -i ~/Documents/fingerprint_depot/webapi/WebContent/apitestpage/api.json  \
+  -o /Users/brad/Documents/fingerprint_depot/webapi/WebContent/apitestpage/apiclient/
+
+java -cp target/fpclient-swagger-codegen-1.0.0.jar:../../modules/swagger-codegen-cli/target/swagger-codegen-cli.jar \
+  io.swagger.codegen.SwaggerCodegen generate -l jaxrs\
+  -i ~/Documents/fingerprint_depot/webapi/WebContent/apitestpage/api.json  \
+  -o /Users/brad/Documents/fingerprint_depot/webapi/WebContent/apitestpage/apiserver/
+
+
+
