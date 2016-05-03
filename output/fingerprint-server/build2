@@ -1,0 +1,9 @@
+mvn package
+
+java -cp ../../modules/swagger-codegen-cli/target/swagger-codegen-cli.jar \
+  io.swagger.codegen.SwaggerCodegen generate -l jaxrs --library jersey2 \
+  -i ~/Documents/fingerprint_depot/webapi/WebContent/apitestpage/api.json  \
+  -o /Users/brad/Documents/fingerprint_depot/webapi/WebContent/apitestpage/api2java
+
+
+

@@ -1,0 +1,9 @@
+mvn package
+
+java -cp target/fpserver-swagger-codegen-1.0.0.jar:../../modules/swagger-codegen-cli/target/swagger-codegen-cli.jar \
+  io.swagger.codegen.SwaggerCodegen generate -l fpserver\
+  -i ~/Documents/fingerprint_depot/webapi/WebContent/apitestpage/api3.json  \
+  -o /Users/brad/Documents/fingerprint_depot/webapi/WebContent/apitestpage/api2java
+
+
+
