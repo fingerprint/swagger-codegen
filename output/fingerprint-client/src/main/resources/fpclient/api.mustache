@@ -9,10 +9,11 @@
 *
 */
 
-var {{classname}} = (function() {
+var {{classname}}API = (function() {
 
     var funcs = {};
-
+	var bLog = false;
+	
     function addQueryParam(url, n, v)
     {
         return url + (url.indexOf("?") == -1 ? "?" : "&") + n + "=" + encodeURIComponent(v);
@@ -21,21 +22,27 @@ var {{classname}} = (function() {
     function setCallbacks(request, nickname, callbacks)
     {
         request.success = function(result, status, msg) {
-            console.log(nickname + " success " + result);
+        	if (bLog) {
+	            console.log(nickname + " success " + result);
+	        }
             if (callbacks && callbacks.success) {
                 callbacks.success(result);
             }
         };
 
         request.error = function(request, status, msg) {
-            console.log(nickname + " error " + result);
+        	if (bLog) {
+	            console.log(nickname + " error " + result);
+	        }
             if (callbacks && callbacks.error) {
                 callbacks.error(msg);
             }
         };
 
         request.complete = function() {
-            console.log(nickname + " complete");
+        	if (bLog) {
+	            console.log(nickname + " complete");
+	        }
             if (callbacks && callbacks.complete) {
                 callbacks.complete(msg);
             }
@@ -49,7 +56,7 @@ var {{classname}} = (function() {
         var request = new HttpRequest();
         setCallbacks(request, "{{nickname}}", callbacks);
 
-        var url = Utils.getServer() + '{{path}}'{{#pathParams}}
+        var url = Utils.getServer() + '/api/v4/{{classname}}{{path}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', String({{^required}}opt_{{/required}}{{paramName}})){{/pathParams}};
 
     {{#hasHeaderParams}}

@@ -66,7 +66,7 @@ public class FpclientGenerator extends DefaultCodegen implements CodegenConfig {
 
         outputFolder = "generated-code/fpclient";
         modelTemplateFiles.put("model.mustache", ".js");
-        apiTemplateFiles.put("api.mustache", ".js");
+        apiTemplateFiles.put("api.mustache", "API.js");
         embeddedTemplateDir = templateDir = "fpclient";
                 
         // TODO: how to make this dynamic name?
