@@ -85,20 +85,18 @@ var {{classname}}API = (function() {
 
     {{/hasQueryParams}}
     {{#hasBodyParam}}
-        var body = {};
     {{#bodyParams}}
     {{^required}}
         if ({{^required}}opt_{{/required}}{{paramName}} !== undefined) {
-            body['{{baseName}}'] = {{^required}}opt_{{/required}}{{paramName}};
+	        request.setRequestHeader("Content-Type", "application/json");
+            request.data = JSON.stringify({{^required}}opt_{{/required}}{{paramName}});
         }
     {{/required}}
     {{#required}}
-        body['{{baseName}}'] = {{^required}}opt_{{/required}}{{paramName}};
+		request.setRequestHeader("Content-Type", "application/json");
+        request.data = JSON.stringify({{^required}}opt_{{/required}}{{paramName}});
     {{/required}}
     {{/bodyParams}}
-        request.setRequestHeader("Content-Type", "application/json");
-        request.data = JSON.stringify(body);
-
     {{/hasBodyParam}}
         request.method = '{{httpMethod}}';
         request.url = url;
