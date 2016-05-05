@@ -65,7 +65,7 @@ public class FpclientGenerator extends DefaultCodegen implements CodegenConfig {
         typeMapping.put("binary", "string");
 
         outputFolder = "generated-code/fpclient";
-        modelTemplateFiles.put("model.mustache", ".js");
+//        modelTemplateFiles.put("model.mustache", ".js");
         apiTemplateFiles.put("api.mustache", "API.js");
         embeddedTemplateDir = templateDir = "fpclient";
                 
@@ -82,9 +82,12 @@ public class FpclientGenerator extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toApiName(String name) {
         System.err.println("toApiName: " + name);
+        System.err.println("outputFolder: " + outputFolder);
         int i = outputFolder.lastIndexOf("/");
-        return outputFolder.substring(i+1);
-//        return "BRAD";
+        
+        additionalProperties.put("apiName2", outputFolder.substring(i+1));
+
+        return outputFolder.substring(i+1) + name;
     }
 
     @Override

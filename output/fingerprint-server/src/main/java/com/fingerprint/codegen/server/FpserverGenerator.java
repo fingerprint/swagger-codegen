@@ -22,7 +22,7 @@ public class FpserverGenerator extends AbstractJavaJAXRSServerCodegen {
 //        apiTemplateFiles.put("apiServiceFactory.mustache", ".java");
 
         apiPackage = "";//io.swagger.api";
-        modelPackage = "";//io.swagger.model";
+        modelPackage = "models";//io.swagger.model";
 
         additionalProperties.put("title", title);
         

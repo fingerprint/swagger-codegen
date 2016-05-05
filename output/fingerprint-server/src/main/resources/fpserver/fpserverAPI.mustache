@@ -4,30 +4,39 @@
 
 package com.fingerprintplay.v4.{{apiName}};
 
+{{#atLeastOneModel}}import com.fingerprintplay.v4.{{apiName}}.models.*;
+{{/atLeastOneModel}}
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 
-@Path("{{apiName}}/{{baseName}}")
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+@Path("/{{apiName}}/{{baseName}}")
 {{#operations}}
 public class {{classname}}  {
 
 {{#operation}}
     @{{httpMethod}}
     {{#subresourceOperation}}@Path("{{path}}"){{/subresourceOperation}}
-    public Response {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}, {{/allParams}}@Context SecurityContext securityContext) throws NotFoundException 
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
+    public Response {{nickname}}In({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}, {{/allParams}}@Context SecurityContext securityContext) throws NotFoundException 
     {
     	// Argument validation, if any, done here.  Then, run is called.
-        return run({{#allParams}}{{#isFile}}inputStream, fileDetail{{/isFile}}{{^isFile}}{{paramName}}{{/isFile}},{{/allParams}}securityContext);
+        return {{nickname}}({{#allParams}}{{#isFile}}inputStream, fileDetail{{/isFile}}{{^isFile}}{{paramName}}{{/isFile}},{{/allParams}}securityContext);
     }
+    
 {{/operation}}
-
     {{#operation}}
-    public Response run({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}, {{/allParams}}SecurityContext securityContext) throws NotFoundException 
+    public Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}, {{/allParams}}SecurityContext securityContext) throws NotFoundException 
     {
         return Response.ok().entity("ok").build();
     }
+    
     {{/operation}}
 
 }

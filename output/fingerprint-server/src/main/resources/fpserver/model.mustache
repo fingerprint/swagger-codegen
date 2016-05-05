@@ -1,15 +1,14 @@
-package {{package}};
+//
+//  Copyright 2016 Fingerprint Digital, Inc. All rights reserved.
+//
 
-import java.util.Objects;
-{{#imports}}import {{import}};
-{{/imports}}
+package com.fingerprintplay.v4.{{apiName}}.models;
 
-{{#serializableModel}}import java.io.Serializable;{{/serializableModel}}
+import java.util.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 {{#models}}
-{{#model}}{{#description}}
-/**
- * {{description}}
- **/{{/description}}
+{{#model}}
 {{#isEnum}}{{>enumOuterClass}}{{/isEnum}}
 {{^isEnum}}{{>pojo}}{{/isEnum}}
 {{/model}}

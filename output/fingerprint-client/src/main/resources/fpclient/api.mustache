@@ -56,7 +56,7 @@ var {{classname}}API = (function() {
         var request = new HttpRequest();
         setCallbacks(request, "{{nickname}}", callbacks);
 
-        var url = Utils.getServer() + '/api/v4/{{classname}}{{path}}'{{#pathParams}}
+        var url = Utils.getServer() + '/api/v4/{{apiName2}}{{path}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', String({{^required}}opt_{{/required}}{{paramName}})){{/pathParams}};
 
     {{#hasHeaderParams}}

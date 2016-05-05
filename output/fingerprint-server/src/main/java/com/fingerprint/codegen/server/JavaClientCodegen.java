@@ -48,7 +48,7 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
     public JavaClientCodegen() {
         super();
-        outputFolder = "generated-code" + File.separator + "java";
+//        outputFolder = "generated-code" + File.separator + "java";
         modelTemplateFiles.put("model.mustache", ".java");
         //apiTemplateFiles.put("api.mustache", ".java");
         embeddedTemplateDir = templateDir = "Java";
@@ -424,6 +424,8 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toModelName(final String name) {
         final String sanitizedName = sanitizeName(modelNamePrefix + name + modelNameSuffix);
+
+        additionalProperties.put("atLeastOneModel", true);
 
         // camelize the model name
         // phone_number => PhoneNumber
