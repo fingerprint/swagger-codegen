@@ -14,11 +14,17 @@ var {{classname}}API = (function() {
     var funcs = {};
 	var bLog = false;
 
-    function addParam(s, n, v, firstChar)
+    function addParam(s, n, v, bQuery)
     {
-        return s + (s.indexOf("&") == -1 ? firstChar : "&") + n + "=" + encodeURIComponent(v);
+    	var connector = "";
+    	if (bQuery) {
+    		connector = (url.indexOf("?") == -1) ? "?" : "&";
+    	} else if (s.length > 0) {
+    		connector = "&";
+    	}
+		return s + connector + n + "=" + encodeURIComponent(v);    		
     }
-	
+    
     function setCallbacks(request, nickname, callbacks)
     {
         request.success = function(result, status, msg) {
@@ -99,7 +105,7 @@ var {{classname}}API = (function() {
     {{/bodyParams}}
     {{/hasBodyParam}}   
     {{#hasFormParams}}
-	    request.setRequestHeader("Content-Type", "x-www-form-urlencoded");
+	    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     	var formData = "";
     {{#formParams}}
     {{^required}}
