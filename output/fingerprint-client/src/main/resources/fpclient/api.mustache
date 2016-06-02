@@ -13,12 +13,12 @@ var {{classname}}API = (function() {
 
     var funcs = {};
 	var bLog = false;
-	
-    function addQueryParam(url, n, v)
-    {
-        return url + (url.indexOf("?") == -1 ? "?" : "&") + n + "=" + encodeURIComponent(v);
-    }
 
+    function addParam(s, n, v, firstChar)
+    {
+        return s + (s.indexOf("&") == -1 ? firstChar : "&") + n + "=" + encodeURIComponent(v);
+    }
+	
     function setCallbacks(request, nickname, callbacks)
     {
         request.success = function(result, status, msg) {
@@ -75,11 +75,11 @@ var {{classname}}API = (function() {
     {{#queryParams}}
     {{^required}}
         if ({{^required}}opt_{{/required}}{{paramName}} !== undefined) {
-            url = addQueryParam(url, '{{baseName}}', {{^required}}opt_{{/required}}{{paramName}});
+            url = addParam(url, '{{baseName}}', {{^required}}opt_{{/required}}{{paramName}}, "?");
         }
     {{/required}}
     {{#required}}
-        url = addQueryParam(url, '{{baseName}}', {{^required}}opt_{{/required}}{{paramName}});
+        url = addParam(url, '{{baseName}}', {{^required}}opt_{{/required}}{{paramName}}, "?");
     {{/required}}
     {{/queryParams}}
 
@@ -97,7 +97,22 @@ var {{classname}}API = (function() {
         request.data = JSON.stringify({{^required}}opt_{{/required}}{{paramName}});
     {{/required}}
     {{/bodyParams}}
-    {{/hasBodyParam}}
+    {{/hasBodyParam}}   
+    {{#hasFormParams}}
+	    request.setRequestHeader("Content-Type", "x-www-form-urlencoded");
+    	var formData = "";
+    {{#formParams}}
+    {{^required}}
+        if ({{^required}}opt_{{/required}}{{paramName}} !== undefined) {
+            formData = addParam(formData, '{{baseName}}', {{^required}}opt_{{/required}}{{paramName}}, "");
+        }
+    {{/required}}
+    {{#required}}
+        formData = addParam(formData, '{{baseName}}', {{^required}}opt_{{/required}}{{paramName}}, "");
+    {{/required}}
+    {{/formParams}}
+    	request.data = formData;
+    {{/hasFormParams}}    
         request.method = '{{httpMethod}}';
         request.url = url;
         request.send();
