@@ -132,7 +132,7 @@ public class FpclientGenerator extends DefaultCodegen implements CodegenConfig {
 
         // camelize the variable name
         // pet_id => PetId
-        name = camelize(name, true);
+        //name = camelize(name, true);
 
         // for reserved word or word starting with number, append _
         if (isReservedWord(name) || name.matches("^\\d.*"))
