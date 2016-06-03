@@ -85,9 +85,15 @@ public class FpclientGenerator extends DefaultCodegen implements CodegenConfig {
         System.err.println("outputFolder: " + outputFolder);
         int i = outputFolder.lastIndexOf("/");
         
-        additionalProperties.put("apiName2", outputFolder.substring(i+1));
+        String prefix = outputFolder.substring(i+1);
+        additionalProperties.put("apiName2", prefix);
 
-        return outputFolder.substring(i+1) + name;
+		if (name.equals("Default")) {
+			name = "";
+		}
+		
+		prefix = prefix.substring(0,1).toUpperCase() + prefix.substring(1);
+        return prefix + name;
     }
 
     @Override
