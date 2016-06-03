@@ -50,7 +50,7 @@ var {{classname}}API = (function() {
 	            console.log(nickname + " complete");
 	        }
             if (callbacks && callbacks.complete) {
-                callbacks.complete(msg);
+                callbacks.complete();
             }
         };
     }
@@ -59,7 +59,7 @@ var {{classname}}API = (function() {
     {{#operation}}
     funcs.{{nickname}} = function({{#allParams}}{{^required}}opt_{{/required}}{{paramName}}, {{/allParams}}callbacks) {
 
-		console.log("calling WebAPI {{nickname}}"{{#allParams}}, 
+		console.log("calling WebAPI {{nickname}}"{{#allParams}} + ", " + 
 			JSON.stringify({{^required}}opt_{{/required}}{{paramName}}){{/allParams}});
 		
         var request = new HttpRequest();
