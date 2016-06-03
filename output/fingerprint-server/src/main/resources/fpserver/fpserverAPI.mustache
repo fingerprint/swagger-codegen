@@ -12,6 +12,10 @@ import com.amazonaws.util.json.JSONObject;
 {{/atLeastOneModel}}
 import com.fingerprintplay.v4support.V3Mapper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -30,11 +34,11 @@ public class {{classname}}  {
     @Consumes({ "application/json" })
     {{/hasBodyParam}}
     @Produces({ "application/json" })
-    public Response {{nickname}}In({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}, {{/allParams}}@Context SecurityContext securityContext) throws NotFoundException 
+    public Response {{nickname}}In({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}, {{/allParams}}@Context HttpServletRequest request, @Context SecurityContext securityContext) throws NotFoundException 
     {
     	// Argument validation, if any, done here.  Then, run is called.
     	try {
-	        return {{nickname}}({{#allParams}}{{#isFile}}inputStream, fileDetail{{/isFile}}{{^isFile}}{{paramName}}{{/isFile}},{{/allParams}}securityContext);
+	        return {{nickname}}({{#allParams}}{{#isFile}}inputStream, fileDetail{{/isFile}}{{^isFile}}{{paramName}}{{/isFile}},{{/allParams}}request, securityContext);
 	    } catch (JSONException jsonException) {
 	    	throw new NotFoundException();
 	    }
@@ -42,16 +46,20 @@ public class {{classname}}  {
     
 {{/operation}}
     {{#operation}}
-    public Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}, {{/allParams}}SecurityContext securityContext) throws NotFoundException, JSONException
+    public Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}, {{/allParams}}HttpServletRequest request, SecurityContext securityContext) throws NotFoundException, JSONException
     {
+        JSONObject data = new JSONObject();    
 	    {{#hasBodyParam}}
 	    {{#bodyParams}}
 	    ObjectMapper mapper = new ObjectMapper();
-	    JSONObject data = new JSONObject(mapper.writeValueAsString({{paramName}}));
+	    try {
+	    	data = new JSONObject(mapper.writeValueAsString({{paramName}}));
+	    } catch (JsonProcessingException e) {
+	    	throw new JSONException("body mapper failed");
+	    }
 	    {{/bodyParams}}
 	    {{/hasBodyParam}}
 	    {{^hasBodyParam}}
-        JSONObject data = new JSONObject();    
 	    {{#queryParams}}
 	    if ({{paramName}} != null) {
 	    	data.put("{{paramName}}", {{paramName}});
@@ -67,7 +75,7 @@ public class {{classname}}  {
 	    {{#pathParams}}
 	    path += "/" + {{paramName}};
 	    {{/pathParams}}
-        return V3Mapper.post(path, data);
+        return V3Mapper.run(request, path, data);
     }
     
     {{/operation}}
