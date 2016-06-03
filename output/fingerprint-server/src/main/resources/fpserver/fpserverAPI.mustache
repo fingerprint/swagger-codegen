@@ -44,6 +44,13 @@ public class {{classname}}  {
     {{#operation}}
     public Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}, {{/allParams}}SecurityContext securityContext) throws NotFoundException, JSONException
     {
+	    {{#hasBodyParam}}
+	    {{#bodyParams}}
+	    ObjectMapper mapper = new ObjectMapper();
+	    JSONObject data = new JSONObject(mapper.writeValueAsString({{paramName}}));
+	    {{/bodyParams}}
+	    {{/hasBodyParam}}
+	    {{^hasBodyParam}}
         JSONObject data = new JSONObject();    
 	    {{#queryParams}}
 	    if ({{paramName}} != null) {
@@ -55,9 +62,7 @@ public class {{classname}}  {
 	    	data.put("{{paramName}}", {{paramName}});
 	    }
 	    {{/formParams}}
-	    {{#bodyParams}}
-	    data.put("data", new JSONObject({{paramName}}.toString()));
-	    {{/bodyParams}}
+	    {{/hasBodyParam}}
 		String path = "/{{baseName}}";
 	    {{#pathParams}}
 	    path += "/" + {{paramName}};
