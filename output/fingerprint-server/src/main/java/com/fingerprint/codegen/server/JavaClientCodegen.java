@@ -466,7 +466,11 @@ public class JavaClientCodegen extends DefaultCodegen implements CodegenConfig {
 
             return getSwaggerType(p) + "<String, " + getTypeDeclaration(inner) + ">";
         }
-        return super.getTypeDeclaration(p);
+        String result = super.getTypeDeclaration(p);
+        if (result.equals("Object")) {
+        	result = "JSONObject";
+        }
+        return result;
     }
 
     @Override
