@@ -54,7 +54,7 @@ public class {{classname}}  {
 	    ObjectMapper mapper = new ObjectMapper();
 	    try {
 	    	if ({{paramName}}.getClass().equals(JSONObject.class)) {
-	    		data = (JSONObject){{paramName}};
+	    		data = new JSONObject({{paramName}}.toString());
 	    	} else {
 		    	data = new JSONObject(mapper.writeValueAsString({{paramName}}));
 		    }
