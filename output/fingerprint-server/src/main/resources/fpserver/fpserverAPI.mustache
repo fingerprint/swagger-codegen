@@ -12,6 +12,7 @@ import com.amazonaws.util.json.JSONObject;
 {{/atLeastOneModel}}
 import com.fingerprintplay.v4support.V3Mapper;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -51,11 +52,12 @@ public class {{classname}}  {
         JSONObject data = new JSONObject();    
 	    {{#hasBodyParam}}
 	    {{#bodyParams}}
-	    ObjectMapper mapper = new ObjectMapper();
 	    try {
 	    	if ({{paramName}}.getClass().equals(JSONObject.class)) {
 	    		data = new JSONObject({{paramName}}.toString());
 	    	} else {
+				ObjectMapper mapper = new ObjectMapper();
+				mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		    	data = new JSONObject(mapper.writeValueAsString({{paramName}}));
 		    }
 	    } catch (JsonProcessingException e) {
