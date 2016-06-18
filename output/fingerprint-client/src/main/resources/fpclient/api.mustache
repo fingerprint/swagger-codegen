@@ -12,7 +12,7 @@
 var {{classname}}API = (function() {
 
     var funcs = {};
-	var bLog = false;
+	var bLog = true;
 
     function addParam(s, n, v, bQuery)
     {
@@ -29,7 +29,7 @@ var {{classname}}API = (function() {
     {
         request.success = function(result, status, msg) {
         	if (bLog) {
-	            console.log(nickname + " success " + result);
+	            console.log(nickname + " success " + JSON.stringify(result));
 	        }
             if (callbacks && callbacks.success) {
                 callbacks.success(result);
@@ -38,7 +38,7 @@ var {{classname}}API = (function() {
 
         request.error = function(request, status, msg) {
         	if (bLog) {
-	            console.log(nickname + " error " + result);
+	            console.log(nickname + " error " + msg);
 	        }
             if (callbacks && callbacks.error) {
                 callbacks.error(msg);
