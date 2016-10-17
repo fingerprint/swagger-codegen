@@ -1,4 +1,4 @@
-#!/bin/bash         
+#!/bin/bash
 cd "$(dirname "$0")"
 
 pushd output/fingerprint-client
@@ -9,7 +9,12 @@ pushd output/fingerprint-server
 mvn package
 popd
 
+pushd output/fingerprint-new-server
+mvn package
+popd
+
 cp output/fingerprint-client/target/fpclient-swagger-codegen-1.0.0.jar ../webapi/codegen
 cp output/fingerprint-server/target/fpserver-swagger-codegen-1.0.0.jar ../webapi/codegen
+cp output/fingerprint-new-server/target/fpserver-swagger-codegen-1.0.0.jar ../fingerprintplay-webapi/codegen
 cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar ../webapi/codegen
-
+cp modules/swagger-codegen-cli/target/swagger-codegen-cli.jar ../fingerprintplay-webapi/codegen

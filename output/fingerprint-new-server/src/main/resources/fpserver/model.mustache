@@ -1,0 +1,17 @@
+//
+//  Copyright 2016 Fingerprint Digital, Inc. All rights reserved.
+//
+
+package com.fingerprintplay.v4.{{apiName}}.models;
+
+import java.util.*;
+import com.amazonaws.util.json.JSONObject;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+{{#models}}
+{{#model}}
+{{#isEnum}}{{>enumOuterClass}}{{/isEnum}}
+{{^isEnum}}{{>pojo}}{{/isEnum}}
+{{/model}}
+{{/models}}
