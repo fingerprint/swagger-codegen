@@ -12,7 +12,7 @@
 var {{classname}}API = (function() {
 
     var funcs = {};
-	var bLog = true;
+	var bLog = false;
 
     function addParam(s, n, v, bQuery)
     {
@@ -59,8 +59,10 @@ var {{classname}}API = (function() {
     {{#operation}}
     funcs.{{nickname}} = function({{#allParams}}{{^required}}opt_{{/required}}{{paramName}}, {{/allParams}}callbacks) {
 
+        if (bLog) {
 		console.log("calling WebAPI {{nickname}}"{{#allParams}} + ", " + 
 			JSON.stringify({{^required}}opt_{{/required}}{{paramName}}){{/allParams}});
+        }
 		
         var request = new HttpRequest();
         setCallbacks(request, "{{nickname}}", callbacks);
