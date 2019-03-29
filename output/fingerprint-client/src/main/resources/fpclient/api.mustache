@@ -12,44 +12,44 @@
 var {{classname}}API = (function() {
 
     var funcs = {};
-	var bLog = false;
+    var bLog = false;
 
     function addParam(s, n, v, bQuery)
     {
-    	var connector = "";
-    	if (bQuery) {
-    		connector = (url.indexOf("?") == -1) ? "?" : "&";
-    	} else if (s.length > 0) {
-    		connector = "&";
-    	}
-		return s + connector + n + "=" + encodeURIComponent(v);    		
+        var connector = "";
+        if (bQuery) {
+            connector = (url.indexOf("?") == -1) ? "?" : "&";
+        } else if (s.length > 0) {
+            connector = "&";
+        }
+        return s + connector + n + "=" + encodeURIComponent(v);
     }
-    
+
     function setCallbacks(request, nickname, callbacks)
     {
         request.success = function(result, status, msg) {
-        	if (bLog) {
-	            console.log(nickname + " success " + JSON.stringify(result));
-	        }
+            if (bLog) {
+                console.log(nickname + " success " + JSON.stringify(result));
+            }
             if (callbacks && callbacks.success) {
                 callbacks.success(result);
             }
         };
 
         request.error = function(request, status, msg) {
-        	if (bLog) {
+            if (bLog) {
                 msg || (msg = request.xhr.responseText);
-	            console.log(nickname + " error " + msg);
-	        }
+                console.log(nickname + " error " + msg);
+            }
             if (callbacks && callbacks.error) {
                 callbacks.error(msg);
             }
         };
 
         request.complete = function() {
-        	if (bLog) {
-	            console.log(nickname + " complete");
-	        }
+            if (bLog) {
+                console.log(nickname + " complete");
+            }
             if (callbacks && callbacks.complete) {
                 callbacks.complete();
             }
@@ -58,14 +58,14 @@ var {{classname}}API = (function() {
 
     {{#operations}}
     {{#operation}}
-    funcs.{{nickname}} = function({{#allParams}}{{^required}}opt_{{/required}}{{paramName}}, {{/allParams}}callbacks) {
+    funcs.{{nickname}} = function({{#allParams}}{{^required}}opt_{{/required}}{{paramName}}, {{/allParams}}callbacks, existingRequest) {
 
         if (bLog) {
-		console.log("calling WebAPI {{nickname}}"{{#allParams}} + ", " + 
-			JSON.stringify({{^required}}opt_{{/required}}{{paramName}}){{/allParams}});
+        console.log("calling WebAPI {{nickname}}"{{#allParams}} + ", " +
+            JSON.stringify({{^required}}opt_{{/required}}{{paramName}}){{/allParams}});
         }
-		
-        var request = new HttpRequest();
+
+        var request = existingRequest || (new HttpRequest());
         setCallbacks(request, "{{nickname}}", callbacks);
 
         var url = Utils.getServer() + '{{basePathWithoutHost}}/{{apiName2}}{{path}}'{{#pathParams}}
@@ -100,19 +100,19 @@ var {{classname}}API = (function() {
     {{#bodyParams}}
     {{^required}}
         if ({{^required}}opt_{{/required}}{{paramName}} !== undefined) {
-	        request.setRequestHeader("Content-Type", "application/json");
+            request.setRequestHeader("Content-Type", "application/json");
             request.data = JSON.stringify({{^required}}opt_{{/required}}{{paramName}});
         }
     {{/required}}
     {{#required}}
-		request.setRequestHeader("Content-Type", "application/json");
+        request.setRequestHeader("Content-Type", "application/json");
         request.data = JSON.stringify({{^required}}opt_{{/required}}{{paramName}});
     {{/required}}
     {{/bodyParams}}
-    {{/hasBodyParam}}   
+    {{/hasBodyParam}}
     {{#hasFormParams}}
-	    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    	var formData = "";
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        var formData = "";
     {{#formParams}}
     {{^required}}
         if ({{^required}}opt_{{/required}}{{paramName}} !== undefined) {
@@ -123,8 +123,8 @@ var {{classname}}API = (function() {
         formData = addParam(formData, '{{baseName}}', {{^required}}opt_{{/required}}{{paramName}}, "");
     {{/required}}
     {{/formParams}}
-    	request.data = formData;
-    {{/hasFormParams}}    
+        request.data = formData;
+    {{/hasFormParams}}
         request.method = '{{httpMethod}}';
         request.url = url;
         request.send();
